@@ -98,13 +98,234 @@ void conditionalInvocation(List<String>? names) {
 //enumarations can enumarate characteristics of a
 enum PersonPropertities { firstName, lastName, age }
 
-enum AnumalType { rato, besouro, esponja }
+enum AnimalType { rato, besouro, esponja }
 
-void enumeration() {
-  print(PersonPropertities.firstName);
+void enumeration(AnimalType animalType) {
+  if (animalType == AnimalType.rato) {
+    print("CADE O RATOOO?");
+  } else if (animalType == AnimalType.besouro) {
+    print("churrascão de inseto");
+  }
 }
 
-void objects() {}
+void enumerationSwitchVersion(AnimalType animalType) {
+  switch (animalType) {
+    case AnimalType.esponja:
+      print("esponja");
+      break;
+    case AnimalType.besouro:
+      print("besouro");
+      break; //break leave the switch statment
+    case AnimalType.rato:
+      print("rato");
+      return; //return don't leave the switch statment
+  }
+  print("function is finished");
+}
+
+class Person {
+  Person(this.name, this.age);
+
+  void run() {
+    print("Running");
+  }
+
+  void breathe() {
+    print("Breathing");
+  }
+
+  void methodTest() {
+    print(name);
+  }
+
+  final String name;
+  final int age;
+}
+
+void testingClasses() {
+  final baz = Person("baz", 10);
+  baz.run();
+  baz.breathe();
+}
+
+void objects() {
+  //final foo = Person();
+  //objects are instances of classes
+}
+
+//constructors can be also call initializers
+void constructorsAndMethods() {
+  final foo = Person("Foo Bar", 24);
+  print(foo.name);
+  print(foo.age);
+  foo.methodTest();
+}
+
+//-------------------------------------------------
+//---------inheritance and subclasses--------------
+//-------------------------------------------------
+//abstract class can't be instantiate, they're useful to make a set of functions to other classes use from.
+abstract class LivingThing {
+  String? name;
+  void breath() {
+    print('$name is breathing');
+  }
+
+  void move() {
+    print('$name is moving');
+  }
+}
+
+class Cat extends LivingThing {
+  final String name;
+  Cat(this.name);
+}
+
+void testSubClasses() {
+  final fluffers = Cat('Soneca');
+  fluffers.move();
+  fluffers.breath();
+}
+
+//-------------------------------------------------
+//---------factory Constructors--------------------
+//-------------------------------------------------
+
+class Animal extends Object {
+  final String name;
+  Animal(this.name);
+
+  //-------------------------------------------------
+  //---------Custom Operators------------------------
+  //-------------------------------------------------
+
+  @override
+  bool operator ==(covariant Animal other) => other.name == name;
+
+  @override
+  int get hashCode => name.hashCode;
+
+  factory Animal.fluffBall() {
+    return Animal('Fluff Ball');
+  }
+}
+
+void factoryConstructors() {
+  final bolota = Animal.fluffBall();
+  print(bolota);
+}
+
+void customOperators() {
+  final dog = Animal('foo');
+  final dog1 = Animal('foo');
+  if (dog == dog1) {
+    print('mema fita');
+  } else {
+    print('diferentão pô');
+  }
+}
+
+//-------------------------------------------------
+//-----------------Extensions----------------------
+//-------------------------------------------------
+
+extension Corrida on Cat {
+  void run() {
+    print('Cat $name is running');
+  }
+}
+
+class PersonProprieties {
+  final String firstName;
+  final String lastName;
+  PersonProprieties(this.firstName, this.lastName);
+}
+
+extension NomeInteiro on PersonProprieties {
+  String get fullName => '$firstName $lastName';
+}
+
+void extensions() {
+  var bar = PersonProprieties('Felpudo', 'Soneca');
+  print(bar.fullName);
+}
+
+//-------------------------------------------------
+//-----------------Asynchronous--------------------
+//-------------------------------------------------
+
+Future<int> heavyFutureMultiplicaPorDois(int a) {
+  return Future.delayed(const Duration(seconds: 3), () => a * 2);
+}
+
+void noFuturo() async {
+  final result = await heavyFutureMultiplicaPorDois(10);
+  print(result);
+}
+
+//-------------------------------------------------
+//----------------------Streams--------------------
+//-------------------------------------------------
+
+Stream<String> getName() {
+  return Stream.periodic(const Duration(seconds: 1), (value) {
+    return 'Foo';
+  });
+}
+
+void corrente() async {
+  await for (final value in getName()) {
+    print(value);
+  }
+  print('Stream Finished');
+}
+
+//-------------------------------------------------
+//------------------GENEREATORS--------------------
+//-------------------------------------------------
+
+Iterable<int> umDoisTres() sync* {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+void generators() {
+  print(umDoisTres());
+  for (final value in umDoisTres()) {
+    print(value);
+    if (value == 2) {
+      break;
+    }
+  }
+}
+
+//-------------------------------------------------
+//------------------Generics-----------------------
+//-------------------------------------------------
+
+class PairOfStrings {
+  final String value1;
+  final String value2;
+  PairOfStrings(this.value1, this.value2);
+}
+
+class PairOfIntegers {
+  final int value1;
+  final int value2;
+  PairOfIntegers(this.value1, this.value2);
+}
+
+class Pair<A, B> {
+  final A value1;
+  final B value2;
+  Pair(this.value1, this.value2);
+}
+
+void generics() {
+  final names = Pair('Churrasco', null);
+  print([names.value1, names.value2]);
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -117,7 +338,17 @@ class MyApp extends StatelessWidget {
     //maps();
     //nullValues('Foo', 'bar', null, null, 'bazer');
     //conditionalInvocation(null);
-    enumeration();
+    //enumeration(AnimalType.besouro);
+    //testingClasses();
+    //constructorsAndMethods();
+    //testSubClasses();
+    //factoryConstructors();
+    //customOperators();
+    //extensions();
+    //noFuturo();
+    //corrente();
+    //generators();
+    generics();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

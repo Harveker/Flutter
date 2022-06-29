@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "-Python",
+			"path": "..\\..\\..\\..\\Python\\-Python"
+		},
+		{
+			"path": "..\\.."
+		}
+	],
+	"settings": {
+		"problems.showCurrentInStatus": true,
+		"java.quickfix.showAt": "line"
+	}
+}
