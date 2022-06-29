@@ -1,15 +1,123 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+String getFullName(String firstName, String lastName) {
+  return '$firstName $lastName';
+}
+
+String printMyName() {
+  return '';
+}
 
 void main() {
   runApp(const MyApp());
 }
 
+void operators() {
+  final name = 'bar';
+  var age = 24;
+  final meiOfAge = age / 2;
+  final doubleOfAge = age * 2;
+  final ageMinusOne = --age;
+  print(meiOfAge);
+  print(doubleOfAge);
+  print(ageMinusOne);
+  if (name == 'foo') {
+    print('yes this is foo');
+  } else if (name != 'bar') {
+    print("No this isn't bar");
+  } else {
+    print('i don\'t know what it is');
+  }
+}
+
+void lists() {
+  final names = ['Foo', 'Bar', 'baz'];
+  final length = names.length;
+  print(length);
+  names.add('My name');
+  print(names);
+}
+
+void sets() {
+  var names = {'foo', 'bar', 'baz'};
+  names.add('foo');
+  names.add('bar');
+  names.add('baz');
+  print(names);
+}
+
+void maps() {
+  var person = {
+    'age': 20,
+    'name': 'Foo',
+  };
+  print(person);
+  person['name'] = 'fooooo';
+  print(person);
+}
+
+void nullValues(String? name, String? names, String? firstName,
+    String? middleName, String? lastName) {
+  String? name = null;
+  print(name);
+  name = 'Foo';
+  print(name);
+
+  List<String?>? names = ['Foo', 'Bar', null];
+  names = null;
+
+  //testing null values through if and the ?? operator.
+  //The ?? select the first non-null variable that appears, otherwise it testes the next.
+  if (firstName != null) {
+    print("first name is first non-null value");
+  } else if (middleName != null) {
+    print("middle name is the first non-null value");
+  } else if (lastName != null) {
+    print("last name is the first non-null value");
+  }
+  var firstNonNullValue = firstName ?? middleName ?? lastName;
+  print(firstNonNullValue);
+
+  //testing the null-aware assignment operator (??=). if the datatype is null in the left the ??= assign the non-null data of the right to the left.
+  String? name0 = firstName;
+  name0 ??= middleName;
+  name0 ??= lastName;
+  print(name0);
+}
+
+void conditionalInvocation(List<String>? names) {
+  //if names is not null after the ? operator, then the lenght will be draw to the Length const, otherwise if names is null,
+  //length will also be null which the operator ?? will select the next value, which here is 0.
+  final Length = names?.length ?? 0;
+}
+
+//enumarations can enumarate characteristics of a
+enum PersonPropertities { firstName, lastName, age }
+
+enum AnumalType { rato, besouro, esponja }
+
+void enumeration() {
+  print(PersonPropertities.firstName);
+}
+
+void objects() {}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //operators();
+    //lists();
+    //sets();
+    //maps();
+    //nullValues('Foo', 'bar', null, null, 'bazer');
+    //conditionalInvocation(null);
+    enumeration();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -24,7 +132,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(
+        title: 'Barter',
+      ),
     );
   }
 }
